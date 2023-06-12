@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>DailyUI Challenge 001</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  
+  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+
+   <style>
+	@import url(https://fonts.googleapis.com/css?family=Cookie|Raleway:300,700,400);
+*{
+	box-sizing: border-box;
+	font-size: 1em;
+	margin: 0;
+	padding: 0;
+}
+body{
+	background: url('https://wallpaperaccess.com/full/2581461.jpg') center no-repeat;
+	background-size: cover;
+	color: #333;
+	font-size: 18px;
+	font-family: 'Raleway', sans-serif;
+}
+/* Pre css */
+.flex {
+  display: flex;
+  align-items: center;
+}
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200px;
+  background: #000;
+  padding: 15px 10px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+.sidebar.close {
+  width: calc(55px + 20px);
+}
+.sidebar.close .logo_name,
+.sidebar.close #lock-icon,
+.sidebar.close #sidebar-close {
+  opacity: 0;
+  pointer-events: none;
+}
+#lock-icon,
+#sidebar-close {
+  padding: 10px;
+  font-size: 25px;
+  cursor: pointer;
+  margin-left: -4px;
+  transition: all 0.3s ease;
+}
+#sidebar-close {
+  display: none;
+  color: #333;
+}
+.menu_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 40px;
+  overflow-y: auto;
+  height: calc(100% - 82px);
+}
+.menu_container::-webkit-scrollbar {
+  display: none;
+}
+.menu_title {
+  position: relative;
+  height: 50px;
+  width: 55px;
+}
+.menu_title .title {
+  margin-left: 15px;
+  transition: all 0.3s ease;
+}
+.sidebar.close .title {
+  opacity: 0;
+}
+.menu_title .line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 20px;
+  border-radius: 25px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.menu_title .line {
+  opacity: 0;
+}
+.sidebar.close .line {
+  opacity: 1;
+}
+.item {
+  list-style: none;
+}
+.link {
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: #707070;
+}
+.link:hover {
+  color: #fff;
+}
+.link span {
+  white-space: nowrap;
+}
+.link i {
+  height: 50px;
+  min-width: 55px;
+  display: flex;
+  font-size: 22px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+
+/* Navbar */
+.navbar {
+  max-width: 500px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 60%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  padding: 10px 20px;
+  border-radius: 0 0 8px 8px;
+  justify-content: space-between;
+}
+#sidebar-open {
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+  margin-right: 20px;
+  display: none;
+}
+
+
+
+/* Responsive */
+@media screen and (max-width: 1100px) {
+  .navbar {
+    left: 65%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .sidebar {
+    left: 0;
+    z-index: 1000;
+  }
+  .sidebar.close {
+    left: -100%;
+  }
+  #sidebar-close {
+    display: block;
+  }
+  #lock-icon {
+    display: none;
+  }
+  .navbar {
+    left: 0;
+    max-width: 100%;
+    transform: translateX(0%);
+  }
+  #sidebar-open {
+    display: block;
+  }
+}    
+.container{
+	border-radius: 0.5em;
+	box-shadow: 0 0 1em 0 rgba(51,51,51,0.25);
+	display: block;
+	max-width: 480px;
+	overflow: hidden;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	padding: 2em;
+	position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 1;
+	width: 98%;
+}
+.container:before{
+	background: url('https://wallpaperaccess.com/full/2581461.jpg') center no-repeat;
+	background-size: cover;
+	content: '';
+	-webkit-filter: blur(10px);
+	filter: blur(10px);
+	height: 100vh;
+	position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: -1;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	width: 100vw;
+}
+.container:after{
+	background: rgba(255,255,255,0.6);
+	content: '';
+	display: block;
+	height: 100%;
+	position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+	width: 100%;
+}
+form button.submit{
+	background: rgba(255,255,255,0.25);
+	border: 1px solid #333;
+	line-height: 1em;
+	padding: 0.5em 0.5em;
+	-webkit-transition: all 0.25s;
+	transition: all 0.25s;
+}
+form button:hover,
+form button:focus,
+form button:active,
+form button.loading{
+	background: #333;
+	color: #fff;
+	outline: none;
+}
+form button.success{
+	background: #27ae60;
+	border-color: #27ae60; 
+	color: #fff;
+}
+@-webkit-keyframes spin{
+	from{ transform: rotate(0deg); }
+	to{ transform: rotate(360deg); }
+}
+@keyframes spin{
+	from{ transform: rotate(0deg); }
+	to{ transform: rotate(360deg); }
+}
+form button span.loading-spinner{
+	-webkit-animation: spin 0.5s linear infinite;
+	animation: spin 0.5s linear infinite;
+	border: 2px solid #fff;
+	border-top-color: transparent;
+	border-radius: 50%;
+	display: inline-block;
+	height: 1em;
+	width: 1em;
+}
+
+form label{
+	border-bottom: 1px solid #333;
+	display: block;
+	font-size: 1.25em;
+	margin-bottom: 0.5em;
+	-webkit-transition: all 0.25s;
+	transition: all 0.25s;
+}
+form label.col-one-half{
+	float: left;
+	width: 50%;
+}
+form label.col-one-half:nth-of-type(even){
+	border-left: 1px solid #333;
+	padding-left: 0.25em;
+}
+form label input{
+	background: none;
+	border: none;
+	line-height: 1em;
+	font-weight: 300;
+	padding: 0.125em 0.25em;
+	width: 100%;
+}
+form label input:focus{
+	outline: none;
+}
+form label input:-webkit-autofill{
+	background-color: transparent !important;
+}
+form label span.label-text{
+	display: block;
+	font-size: 0.5em;
+	font-weight: bold;
+	padding-left: 0.5em;
+	text-transform: uppercase;
+	-webkit-transition: all 0.25s;
+	transition: all 0.25s;
+}
+form label.checkbox{
+	border-bottom: 0;
+	text-align: center;
+}
+form label.checkbox input{
+	display: none;
+}
+form label.checkbox span{
+	font-size: 0.5em;
+}
+form label.checkbox span:before{
+	content: '\e157';
+	display: inline-block;
+	font-family: 'Glyphicons Halflings';
+	font-size: 1.125em;
+	padding-right: 0.25em;
+	position: relative;
+		top: 1px;
+}
+form label.checkbox input:checked + span:before{content: '\e067';}
+form label.invalid{border-color: #c0392b !important;}
+form label.invalid span.label-text{color: #c0392b;}
+form label.password{position: relative;}
+form label.password button.toggle-visibility{
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 0.75em;
+	line-height: 1em;
+	position: absolute;
+		top: 50%;
+		right: 0.5em;
+	text-align: center;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	-webkit-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+
+h1{
+	font-size: 3em;
+	margin: 0 0 0.5em 0;
+	text-align: center;
+	font-family: 'Cookie', cursive;
+}
+h1 img{
+	height: auto;
+	margin: 0 auto;
+	max-width: 240px;
+	width: 100%;
+}
+html{
+	font-size: 18px;
+	height: 100%;
+}
+
+.text-center{
+	text-align: center;
+}
+   </style>
+
+  
+</head>
+
+<body>
+	<nav class="sidebar locked">
+		<div class="logo_items flex">
+		  <i class="bx bx-x" id="sidebar-close"></i>
+		</div>
+  
+		<div class="menu_container">
+		  <div class="menu_items">
+			<ul class="menu_item">
+			  <div class="menu_title flex">
+				  <a href="/base" class="link flex">
+					<i class="bx bx-home-alt"></i>
+					  <span> Dashboard</span>
+					</a>
+  
+			  </div>
+			  <li class="item">
+				<a href="/product" class="link flex">
+				  <i class="bx bx-cart-alt"></i>
+				  <span>Products</span>
+				</a>
+			  </li>
+			  <li class="item">
+				<a href="/location" class="link flex">
+				  <i class="bx bx-grid-alt"></i>
+				  <span>Locations</span>
+				</a>
+			  </li>
+			  <li class="item">
+				<a href="/movements" class="link flex">
+				 <i><iconify-icon icon="bx:trip"></iconify-icon></i> 
+				  <span>Movements</span>
+				</a>
+			  </li>
+			</ul>
+			<li class="item">
+			  <a href="/index2" class="link flex">
+			   <i><iconify-icon icon="bx:layer-plus"></iconify-icon></i> 
+				<span>Add Movement</span>
+			  </a>
+			</li>
+			<li class="item">
+			  <a href="/editmovemen" class="link flex">
+			   <i><iconify-icon icon="typcn:edit"></iconify-icon></i> 
+				<span>Edit Movement</span>
+			  </a>
+			</li>
+			<li class="item">
+			  <a href="/report" class="link flex">
+			   <i><iconify-icon icon="line-md:document-report"></iconify-icon></i> 
+				<span>Balance Report</span>
+			  </a>
+			</li>
+		  </ul>
+  
+  
+		  </div>
+		</div>
+	  </nav>
+  <div class="container">
+	<header>
+		<h1>
+			<a href="#">
+				<img src="http://tfgms.com/sandbox/dailyui/logo-1.png" alt="Authentic Collection">
+			</a>
+		</h1>
+	</header>
+	<h1 class="text-center">Add Movement</h1>
+	<form  action="/movement" method="POST"  class="registration-form">
+		<label class="col-one-half">
+			<span class="label-text">product Name</span>
+			<select id="productId" name="productId" class="form-control">
+				<option selected value="">Choose...</option>
+				{% if products|length > 0 %}
+				{% for product in products%}
+				<!-- <option value="{{product.product_id}}">{{product.product_name}}</option> -->
+				<option value="{{product.id}}">{{product.id}}</option>
+				{% endfor %}
+				{% endif %}
+			</select>
+		</label>
+		<label class="col-one-half">
+			<span class="label-text">quantity</span>
+			<input class="form-control" name="qty" id="qty" type="number"
+			placeholder="Enter Quantity" />
+		</label>
+		<label>
+			<span class="label-text">From</span>
+			<select id="fromLocation" class="form-control" name="fromLocation">
+				<option selected value="">Choose...</option>
+
+				{% if locations|length > 0 %}
+				{% for location in locations%}
+				<option value="{{location.id}}">{{location.id}}</option>
+				{% endfor %}
+				{% endif %}
+
+			</select>
+		</label>
+		<label>
+			<span class="label-text">To</span>
+			<select id="toLocation" name="toLocation" class="form-control">
+				<option selected value="">Choose...</option>
+				{% if locations|length > 0 %}
+				{% for location in locations%}
+				<option value="{{location.id}}">{{location.id}}</option>
+				{% endfor %}
+				{% endif %}
+			</select>
+			
+			
+		</label>
+		<div class="form-group mt-4 mb-0">
+			<input type="submit" class="btn btn-primary btn-block" value="Add "
+				class="btn btn-primary">
+		</div>
+		</div>
+
+	</form>
+</div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    
+</body>
+</html>

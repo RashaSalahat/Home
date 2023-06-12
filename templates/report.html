@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Python Flask database</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <style type="text/css">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+            color: #404E67;
+            background:#fff ;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+/* Pre css */
+.flex {
+  display: flex;
+  align-items: center;
+}
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200px;
+  background: #000;
+  padding: 15px 10px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+.sidebar.close {
+  width: calc(55px + 20px);
+}
+.sidebar.close .logo_name,
+.sidebar.close #lock-icon,
+.sidebar.close #sidebar-close {
+  opacity: 0;
+  pointer-events: none;
+}
+#lock-icon,
+#sidebar-close {
+  padding: 10px;
+  font-size: 25px;
+  cursor: pointer;
+  margin-left: -4px;
+  transition: all 0.3s ease;
+}
+#sidebar-close {
+  display: none;
+  color: #333;
+}
+.menu_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 40px;
+  overflow-y: auto;
+  height: calc(100% - 82px);
+}
+.menu_container::-webkit-scrollbar {
+  display: none;
+}
+.menu_title {
+  position: relative;
+  height: 50px;
+  width: 55px;
+}
+.menu_title .title {
+  margin-left: 15px;
+  transition: all 0.3s ease;
+}
+.sidebar.close .title {
+  opacity: 0;
+}
+.menu_title .line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 20px;
+  border-radius: 25px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.menu_title .line {
+  opacity: 0;
+}
+.sidebar.close .line {
+  opacity: 1;
+}
+.item {
+  list-style: none;
+}
+.link {
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: #707070;
+}
+.link:hover {
+  color: #fff;
+}
+.link span {
+  white-space: nowrap;
+}
+.link i {
+  height: 50px;
+  min-width: 55px;
+  display: flex;
+  font-size: 22px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+
+/* Navbar */
+.navbar {
+  max-width: 500px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 60%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  padding: 10px 20px;
+  border-radius: 0 0 8px 8px;
+  justify-content: space-between;
+}
+#sidebar-open {
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+  margin-right: 20px;
+  display: none;
+}
+
+
+
+/* Responsive */
+@media screen and (max-width: 1100px) {
+  .navbar {
+    left: 65%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .sidebar {
+    left: 0;
+    z-index: 1000;
+  }
+  .sidebar.close {
+    left: -100%;
+  }
+  #sidebar-close {
+    display: block;
+  }
+  #lock-icon {
+    display: none;
+  }
+  .navbar {
+    left: 0;
+    max-width: 100%;
+    transform: translateX(0%);
+  }
+  #sidebar-open {
+    display: block;
+  }
+}
+
+        .table-wrapper {
+            width: 700px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  
+        }
+
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+        }
+
+        .table-title h2 {
+            margin: 6px 0 0;
+            font-size: 22px;
+        }
+
+        .table-title .add-new {
+            float: right;
+            height: 30px;
+            font-weight: bold;
+            font-size: 12px;
+            text-shadow: none;
+            min-width: 100px;
+            border-radius: 50px;
+            line-height: 13px;
+        }
+
+        .table-title .add-new i {
+            margin-right: 4px;
+        }
+
+        table.table {
+            table-layout: fixed;
+        }
+
+        table.table tr th,
+        table.table tr td {
+            border-color: #e9e9e9;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table th:last-child {
+            width: 100px;
+        }
+
+        table.table td a {
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 5px;
+            min-width: 24px;
+        }
+
+        table.table td a.add {
+            color: #27C46B;
+        }
+
+        table.table td a.edit {
+            color: #FFC107;
+        }
+
+        table.table td a.delete {
+            color: #E34724;
+        }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table td a.add i {
+            font-size: 24px;
+            margin-right: -1px;
+            position: relative;
+            top: 3px;
+        }
+
+        table.table .form-control {
+            height: 32px;
+            line-height: 32px;
+            box-shadow: none;
+            border-radius: 2px;
+        }
+
+        table.table .form-control.error {
+            border-color: #f50000;
+        }
+
+        table.table td .add {
+            display: none;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <nav class="sidebar locked">
+        <div class="logo_items flex">
+          <i class="bx bx-x" id="sidebar-close"></i>
+        </div>
+  
+        <div class="menu_container">
+          <div class="menu_items">
+            <ul class="menu_item">
+              <div class="menu_title flex">
+                  <a href="/base" class="link flex">
+                    <i class="bx bx-home-alt"></i>
+                      <span> Dashboard</span>
+                    </a>
+  
+              </div>
+              <li class="item">
+                <a href="/product" class="link flex">
+                  <i class="bx bx-cart-alt"></i>
+                  <span>Products</span>
+                </a>
+              </li>
+              <li class="item">
+                <a href="/location" class="link flex">
+                  <i class="bx bx-grid-alt"></i>
+                  <span>Locations</span>
+                </a>
+              </li>
+              <li class="item">
+                <a href="/movements" class="link flex">
+                 <i><iconify-icon icon="bx:trip"></iconify-icon></i> 
+                  <span>Movements</span>
+                </a>
+              </li>
+            </ul>
+            <li class="item">
+              <a href="/index2" class="link flex">
+               <i><iconify-icon icon="bx:layer-plus"></iconify-icon></i> 
+                <span>Add Movement</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="/editmovemen" class="link flex">
+               <i><iconify-icon icon="typcn:edit"></iconify-icon></i> 
+                <span>Edit Movement</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="/report" class="link flex">
+               <i><iconify-icon icon="line-md:document-report"></iconify-icon></i> 
+                <span>Balance Report</span>
+              </a>
+            </li>
+          </ul>
+  
+  
+          </div>
+        </div>
+      </nav>
+    <div class="container">
+        <p>
+        <h1 align="center">
+            Python Flask database</h1>
+        </p>
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2>Balance Report</h2>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Product Name</th>
+                        <th>location Id</th>
+                        <th>Warehouse</th>
+                        <th>Quantity</th>
+                      
+                      
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    <!--balancedDict[row['pid']][row['toLocation']]['qty'] -->
+                    {% for pkey, values in movements.items() %}
+                    {% set count = values|length() %}
+                    <tr>
+                        <td>{{pkey}}</td>
+                        {% for product in products%}
+                        {%if(pkey == product.id) %}
+                        <td>{{product.productName}}</td>
+                        {%endif %}
+                        {% endfor %}
+                        {% for key, value in values.items() %}
+                        <td>{{key}}</td>
+                        {% for location in locations%}
+                        {%if(key == location.id) %}
+                        <td>{{location.locationName}}</td>
+                        {%endif %}
+                        {% endfor %}
+                        <td>{{value.qty}}</td>
+                        {% if values|length() > 1 %}
+                        {% if values|last != key %}
+                    </tr>
+                    <tr>
+                        <td>{{pkey}}</td>
+                        {% for product in products%}
+                        {%if(pkey == product.id) %}
+                        <td>{{product.productName}}</td>
+                        {%endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                
+                
+                </tbody>
+            </table>
+        </div>
+</body>
+
+</html>
